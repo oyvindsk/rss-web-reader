@@ -1,0 +1,17 @@
+
+
+Rawdog:
+http://offog.org/code/rawdog/
+
+rawdog -v -uw
+rawdog  -uw -d rawdog/ -V run.log -v 
+
+
+Run pretty often so we don't miss anything in the feeds that only return latest X
+    CLoud Cron?
+Mark what we've ha read?
+Keep all that's not seen
+Remove all that's have been seen
+
+
+https://thehustle.co/feed/
