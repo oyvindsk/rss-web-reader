@@ -1,0 +1,25 @@
+
+{{define "show-one"}}
+<html>
+	<body>
+			<h1>
+                {{.Title}}
+            </h1>
+            <p>
+                <h2>
+                    <a href={{.FeedURL}}>{{.FeedDesc}}</a> 
+                </h2>
+                <a href={{.Link}}>{{.Link}}</a>
+            </p>
+            <p>
+				Published: {{.PublishedParsed}} | Updated: {{.UpdatedParsed}} | FirtSeen: {{.FirtSeen}} <br>
+            </p>
+            <p>
+                {{.Description}}
+            </p>
+            <p>
+                {{.Content}}
+			</p>
+	</body>
+</html>
+{{end}}

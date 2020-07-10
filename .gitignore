@@ -1,0 +1,4 @@
+# `gcloud build submit` will ignore (leave out) these as well, by default!
+*.log
+*SECRET*
+_old/

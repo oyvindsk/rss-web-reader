@@ -1,0 +1,4 @@
+#!/bin/env bash
+
+
+RRRRRRRRRRRRRRRSS_FEED_USERNAME=BAR2

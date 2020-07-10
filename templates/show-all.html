@@ -1,0 +1,27 @@
+
+{{define "show-all"}}
+<html>
+	<body>
+		<form action="/seen" method="post">
+			<input type="submit" value="Set all these {{len .Items}} as seen!">
+		</form>
+		
+		Showing {{len .Items}} of {{.Cnt}} unseen
+
+		{{range $i := .Items}}
+			<p>
+				<h1><a href="/show-one?guid={{$i.K.Name}}">{{$i.Title}}</a></h1>
+                <h2>{{$i.FeedDesc}}</h2> <a href={{$i.FeedURL}}>feed url</a> GUID: {{$i.K.Name}} <br>
+				Published: {{$i.PublishedParsed}} | Updated: {{$i.UpdatedParsed}} | FirtSeen: {{$i.FirtSeen}} <br>
+				Categories: {{$i.Categories}} <br>
+			</p>
+		{{end}}
+
+		<form action="/seen" method="post">
+			<input type="submit" value="Set all these {{len .Items}} as seen!">
+		</form>
+		Unseen: {{.Cnt}}
+		
+	</body>
+</html>
+{{end}}

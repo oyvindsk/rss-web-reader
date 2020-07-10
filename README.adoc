@@ -1,17 +1,48 @@
 
+== Deploying
 
-Rawdog:
-http://offog.org/code/rawdog/
-
-rawdog -v -uw
-rawdog  -uw -d rawdog/ -V run.log -v 
-
-
-Run pretty often so we don't miss anything in the feeds that only return latest X
-    CLoud Cron?
-Mark what we've ha read?
-Keep all that's not seen
-Remove all that's have been seen
+    ./deployment/build-and-run-docker-image-locally.sh # fails to start, but that's ok
+    ./deployment/push-local-image-to-google-container-registry.sh 
+    ./deployment/deploy-from-google-container-registry.sh 
 
 
-https://thehustle.co/feed/
+=== Build
+* Build with docker locally
+** ./build-and-run-docker-image-locally.sh
+*** ATM it does not start locally ("FATAL prefix:echo,file:main.go:62:  dialing: google: could not find default credentials.."). But it should run in Run
+** docker push eu.gcr.io/rss-test-281216/rss-reader:test
+* OR build with Google Cloud Build
+** see build-with-google-cloud-build.sh
+
+=== Deploy to Google Cloud Run
+Deploy from Google Container Registry.
+
+== Plan
+=== 1st version:
+
+* Fetch all feeds periodically
+* Remember seen, don't add the same article/item twice
+* Show them:
+** Just the title, date, and link
+** Order by reversed pub date
+
+=== 2nd version:
+ - Password!
+ - Remember seeen
+
+=== 3rd version:
+ * Nicer templates
+ * Clean up code
+ * Put username/password in a file or something, for all the scripts too
+ * Fix scrips
+
+=== 4th version:
+ * Optimize datastore calls, use *multi
+
+
+== Echo
+
+=== Quirks:
+
+* Template Render() always succeeds and return 200, no error message if Render returns an error =/
+* How to log in included funcs ad packages? Pass Echo context along.. ? Ufgr
