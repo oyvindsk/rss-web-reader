@@ -5,4 +5,6 @@
 set -e 
 set -o pipefail
 
-docker push $RSS_FEED_IMAGE_URL
+gcloud beta emulators datastore start
+
+# To use, just run with the correct env varibale: DATASTORE_EMULATOR_HOST=localhost:8081 go run *.go

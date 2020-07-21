@@ -5,12 +5,11 @@
 set -e 
 set -o pipefail
 
-IMAGE_URL=eu.gcr.io/rss-test-281216/rss-reader:test
 
 # remove :latest so we don't acidentally run an old one
 # don't use :latest when deploying, keep it ..
-# sudo docker rmi ${IMAGE_URL}
+# sudo docker rmi ${RSS_FEED_IMAGE_URL}
 
-sudo docker build -t ${IMAGE_URL} -f ./deployment/SECRET-Dockerfile .
+echo "Docker building image withg tag: $RSS_FEED_IMAGE_URL"
 
-sudo docker run -ti --rm -p 8080:8080 ${IMAGE_URL}
+sudo docker build --build-arg RSS_FEED_FEEDSFILE=${RSS_FEED_FEEDSFILE} -t ${RSS_FEED_IMAGE_URL} -f ./deployment/Dockerfile .

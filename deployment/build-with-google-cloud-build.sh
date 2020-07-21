@@ -1,7 +1,7 @@
 
-FIXME
-# PROJECT=stunning-symbol-139515                              # GCP project 
-# IMAGE_URL=gcr.io/stunning-symbol-139515/web-oyvindsk.com    # The docker (or..?) image to deploy, uses tagged :latest ? FIXME
+exit 1
+# FIXME
+
 
 # # Move the secret Dockerfile to the standard filename for gcloud
 # mv SECRET-Dockerfile Dockerfile

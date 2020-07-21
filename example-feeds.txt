@@ -1,0 +1,17 @@
+
+// This is a comment line and is ignored
+
+// Format of real lines is:
+// Name URL
+
+// No spaces in the name or url!
+
+The-Hustle                     https://thehustle.co/feed/  After URL.. so this is ignored
+Golang-Weekly                  https://cprss.s3.amazonaws.com/golangweekly.com.xml // foo bar
+Hacker-Newsletter              https://us1.campaign-archive.com/feed?u=faa8eb4ef3a111cef92c4f3d4&id=e505c88a2e
+Statuscode                     https://weekly.statuscode.com/rss/
+Stackoverflow-Blog             https://stackoverflow.blog/newsletter/feed/
+InfoQ                          https://feed.infoq.com/
+SourceHut-Blog                 https://sourcehut.org/blog/index.xml
+Drew-DeVaults-Blog             https://drewdevault.com/feed.xml
+HN-whos-hiring-freelance       https://hnrss.org/whoishiring/freelance

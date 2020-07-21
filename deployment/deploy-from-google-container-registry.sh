@@ -1,7 +1,17 @@
 
-PROJECT=rss-test-281216                             # GCP project 
-REGION=europe-west1                                 # GCP Region
-SERVICE_NAME=web-rss-reader                         # Service Name in Cloud Run
-IMAGE_URL=eu.gcr.io/rss-test-281216/rss-reader:test # The docker (or..?) image to deploy, uses tagged :latest ? FIXME
+#!/usr/bin/env bash
 
-gcloud run deploy $SERVICE_NAME --project $PROJECT --platform managed --region $REGION --allow-unauthenticated --image $IMAGE_URL --concurrency 1000
+# try to stop if something fails, 
+# see https://stackoverflow.com/questions/821396/aborting-a-shell-script-if-any-command-returns-a-non-zero-value
+set -e 
+set -o pipefail
+
+gcloud run deploy               \
+    $RSS_FEED_SERVICE_NAME      \
+    --set-env-vars="RSS_FEED_PROJECT=${RSS_FEED_PROJECT},RSS_FEED_FEEDSFILE=${RSS_FEED_FEEDSFILE},RSS_FEED_USERNAME=${RSS_FEED_USERNAME},RSS_FEED_PASSWORD=${RSS_FEED_PASSWORD}" \
+    --project $RSS_FEED_PROJECT \
+    --platform managed          \
+    --region $RSS_FEED_REGION   \
+    --allow-unauthenticated     \
+    --image $RSS_FEED_IMAGE_URL \
+    --concurrency 1000

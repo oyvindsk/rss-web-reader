@@ -1,41 +1,107 @@
 
-== Deploying
 
-    ./deployment/build-and-run-docker-image-locally.sh # fails to start, but that's ok
-    ./deployment/push-local-image-to-google-container-registry.sh 
-    ./deployment/deploy-from-google-container-registry.sh 
+== Running locally
+You need the Google Cloud Platform tooling installed and working. That is, `gcloud auth list` should list at least 1 account. If you use the Datastore Emulator you probably do not need to authenticate.  
+
+You also need to create a config file and call it whatever (I use `SECRET-config.sh` so it's git ignored). Set the first variables, see `example-config.sh`. 
+
+When you have a config file, run `source SECRET-config.sh` before running any scripts. Run scripts from the "root" `rss-web-reader` folder, they might point to other files with relative urls.
 
 
-=== Build
-* Build with docker locally
-** ./build-and-run-docker-image-locally.sh
-*** ATM it does not start locally ("FATAL prefix:echo,file:main.go:62:  dialing: google: could not find default credentials.."). But it should run in Run
-** docker push eu.gcr.io/rss-test-281216/rss-reader:test
-* OR build with Google Cloud Build
-** see build-with-google-cloud-build.sh
+=== Run with Datastore Emulator
 
-=== Deploy to Google Cloud Run
-Deploy from Google Container Registry.
+*Start the emulator:*
+
+It simpley calls a gcloud command: `./development/locally/run-datastore-emulator.sh`
+
+*Start the go program:*
+`./development/locally/run-with-datastore-emulator.sh`
+
+=== Run using the real Google Cloud Datastore
+This is the default. You need to set a real PROJECT in your config file. 
+
+Also you probably have to run `gcloud auth application-default login` and log in in the web browser. This is so the go lib can authenticate with Google Cloud services when running locally. 
+
+*Start the go program:*
+`./development/locally/run.sh`
+
+
+== Deploying to Google Cloud Run
+(Testet on Linux)
+
+You need the Google Cloud Platform tooling installed and working. That is, `gcloud auth list` should list at least 1 account. 
+
+You also need to create a `SECRET-config.sh` and set all variables, see `example-config.sh`. `RSS_FEED_URL` must be set after you know if, that is, after the first deply to Cloud Run (step 3) I guess ..
+
+When you have a config file, run `source config.sh` before running any scripts. Run scripst from the "root" `rss-web-reader` folder, they might point to other files with relative urls.
+
+Basically Cloud Run takes a Docker images from Google Container Registry and runs it. There are 4 steps to a full deploy:
+
+1. Buid a Docker image. Use Docker locally, Google Cloud Build, or .. whatever
+2. Push the image to Google Container Registry
+3. Deploy it to Cloud Run
+4. Create a Google Cloud Scheduler trigger to refresh all the RSS feeds (POST to /refresh)  
+
+=== Build a Docker image
+
+Keep in mind that the image contains your "secrets" like the config settings and the feeds file. 
+
+*Using Docker locally:*
+
+`./deployment/build-docker-image-locally.sh`
+
+It uses sudo. Modify it if you don't want that.
+
+*Using Google Cloud Build:*
+
+TODO: fix script
+
+
+
+=== Push the image to Google Container Registry
+`./deployment/push-local-image-to-google-container-registry.sh`
+
+Takes  a while =( 
+
+TODO: Either make the image smaller or try to find a way to deploy without a Docker image or with a standard one .. or .. 
+
+
+=== Deploy it to Cloud Run
+`./deployment/deploy-from-google-container-registry.sh`
+Should just work and finish in 15 seconds or so (?) Confirm in the web console. If it does not work the logging in the web console under Cloud Run => [revision] => Logs is helpful. 
+ 
+
+=== Create a Google Cloud Scheduler trigger
+To refresh all the RSS feeds (POST to /refresh). The default is to trigger it 7 minutes over every hour.
+
+`./deployment/create-google-cloud-scheduler-trigger.sh`
+
+Should just work and print some useful info. Also see Cloud Scheduler in the web console: https://console.cloud.google.com/cloudscheduler
+
+
+
+
+
+
 
 == Plan
 === 1st version:
-
-* Fetch all feeds periodically
-* Remember seen, don't add the same article/item twice
+* Fetch all feeds periodically [OK]
+* Remember seen, don't add the same article/item twice [OK]
 * Show them:
-** Just the title, date, and link
-** Order by reversed pub date
+** Just the title, date, and link [OK]
+** Order by reversed pub date[ OK]
 
 === 2nd version:
- - Password!
- - Remember seeen
+ - Password! [OK]
+ - Remember seeen [OK]
 
 === 3rd version:
  * Nicer templates
  * Clean up code
- * Put username/password in a file or something, for all the scripts too
- * Fix scrips
-
+ * Put username/password in a file or something, for all the scripts too [OK]
+ * Fix scrips [OK]
+ 
 === 4th version:
  * Optimize datastore calls, use *multi
 
