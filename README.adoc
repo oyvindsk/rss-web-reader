@@ -1,4 +1,15 @@
 
+A simple RSS reader I made for myself. 
+
+Github repo could be lagging, it's a mirror of https://git.sr.ht/~oyvindsk/rss-web-reader . 
+
+Feature aka why?? :
+ 
+ - Usable on all devices with a web browser 
+ - It always knows what articles (items) you have read already. Therefore it's easy to use on multiple devices.
+ - Never misses anything, even when I don't use it. Updates all RSS feeds "in the background". (Articles/items usually disappear from a feed after a while)
+ - Use the web browser (not a separate program) so it's fast to bookmark etc
+
 
 == Running locally
 You need the Google Cloud Platform tooling installed and working. That is, `gcloud auth list` should list at least 1 account. If you use the Datastore Emulator you probably do not need to authenticate.  
