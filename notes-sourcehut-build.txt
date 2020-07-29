@@ -1,0 +1,23 @@
+
+Service Account:
+New service account, with Cloud Run Admin (todo)
+Create a secret, download the secret file as json
+
+
+Grant the new Service Account permissions to deploy:
+To deploy to Cloud Run (fully managed) grant the Cloud Run Admin and Service Account User roles to the Cloud Build service account:
+https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-cloud-run
+    
+
+Use service account
+
+- Cloud Run 
+
+cp ~/Downloads/rss-test-281216-54367c6fb65d.json ~/service-account-secret.json
+gcloud auth activate-service-account --key-file ~/service-account-secret.json
+
+
+
+Grant the new Service Account permissions to push to GCR:
+https://cloud.google.com/container-registry/docs/access-control
+On Service Account, add role: "Storage Admin"

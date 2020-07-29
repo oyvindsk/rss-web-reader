@@ -19,7 +19,8 @@ WORKDIR /app
 COPY ./src/go.mod     .
 COPY ./src/go.sum     .
 
-RUN go get
+# see https://github.com/golang/go/issues/37700
+RUN go get -u -d ./...
 
 COPY ./src/*.go            ./
 COPY ./templates/*.html    ./templates/
