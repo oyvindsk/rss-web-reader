@@ -1,0 +1,32 @@
+image: archlinux
+packages:
+    - docker
+    - google-cloud-sdk
+sources:
+    - https://git.sr.ht/~oyvindsk/rss-web-reader
+secrets:
+    - 9d61efde-4af5-466e-aa6b-b2987cac54b0
+    - e11f80bf-43c5-4cd7-86b2-cc155fa9bb23
+    - e62b6180-b306-4f6e-9ca2-ef2a55480f3a
+tasks:
+    - setup-run: |
+        gcloud auth activate-service-account --key-file ~/service-account-secret.json
+    - setup-docker: |
+        sudo systemctl start docker
+    - setup-rss-web-reader: |
+        cd rss-web-reader
+        cp  ~/SECRET-* .
+        source SECRET-config.sh
+    - build-docker-image: |
+        cd rss-web-reader
+        source SECRET-config.sh
+        ./deployment/build-docker-image-locally.sh
+    - push-docker-image-to-gcr: |
+        cd rss-web-reader
+        source SECRET-config.sh
+        ./deployment/push-local-image-to-google-container-registry.sh
+    - deploy-from-gcr: |
+        cd rss-web-reader
+        source SECRET-config.sh
+        ./deployment/deploy-from-google-container-registry.sh
+    

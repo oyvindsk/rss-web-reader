@@ -7,6 +7,9 @@ Create a secret, download the secret file as json
 Grant the new Service Account permissions to deploy:
 To deploy to Cloud Run (fully managed) grant the Cloud Run Admin and Service Account User roles to the Cloud Build service account:
 https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-cloud-run
+
+https://stackoverflow.com/questions/55788714/deploying-to-cloud-run-with-a-custom-service-account-failed-with-iam-serviceacco/57689331#57689331
+https://stackoverflow.com/questions/55605972/what-predefined-iam-roles-does-a-service-account-need-to-complete-the-google-clo
     
 
 Use service account
