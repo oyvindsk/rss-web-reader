@@ -108,13 +108,14 @@ Should just work and print some useful info. Also see Cloud Scheduler in the web
  - Remember seeen [OK]
 
 === 3rd version:
- * Nicer templates
- * Clean up code
+ * Nicer templates [kind of]
  * Put username/password in a file or something, for all the scripts too [OK]
  * Fix scrips [OK]
- 
-=== 4th version:
+
+ * Clean up code
  * Optimize datastore calls, use *multi
+ * Test if the "mark these as read" only marks those seen 
+    ** (and not just 10 random)
 
 
 == Echo

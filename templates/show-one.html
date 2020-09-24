@@ -1,25 +1,44 @@
 
 {{define "show-one"}}
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  		<title>RSS ftw: {{.Title}}</title>
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+	</head>
+
 	<body>
+        <div class="lh-copy measure-wide-l measure ma4 ma7-l">
+
+            <a href="/"><< back</a>
+
+           <h2>
+                {{.FeedDesc}} 
+            </h2>
+        
 			<h1>
                 {{.Title}}
             </h1>
-            <p>
-                <h2>
-                    <a href={{.FeedURL}}>{{.FeedDesc}}</a> 
-                </h2>
-                <a href={{.Link}}>{{.Link}}</a>
-            </p>
-            <p>
-				Published: {{.PublishedParsed}} | Updated: {{.UpdatedParsed}} | FirstSeen: {{.FirstSeen}} <br>
-            </p>
+
+        
+        
+            <a href={{.Link}}>Post Link</a> || <a href={{.FeedURL}}>Feed Link</a> || Published: {{.PublishedParsed}} | Updated: {{.UpdatedParsed}} | FirstSeen: {{.FirstSeen}}
+            <br>
+            Categories: {{.Categories}}
+            <br>
+
+
             <p>
                 {{.Description}}
             </p>
             <p>
                 {{.Content}}
-			</p>
-	</body>
+            </p>
+
+                
+        </div>
+    </body>
 </html>
 {{end}}

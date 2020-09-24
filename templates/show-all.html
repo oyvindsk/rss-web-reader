@@ -1,27 +1,45 @@
 
 {{define "show-all"}}
-<html>
-	<body>
-		<form action="/seen" method="post">
-			<input type="submit" value="Set all these {{len .Items}} as seen!">
-		</form>
-		
-		Showing {{len .Items}} of {{.Cnt}} unseen
 
-		{{range $i := .Items}}
-			<p>
-				<h1><a href="/show-one?guid={{$i.K.Name}}">{{$i.Title}}</a></h1>
-                <h2>{{$i.FeedDesc}}</h2> <a href={{$i.FeedURL}}>feed url</a> GUID: {{$i.K.Name}} <br>
-				Published: {{$i.PublishedParsed}} | Updated: {{$i.UpdatedParsed}} | FirstSeen: {{$i.FirstSeen}} <br>
-				Categories: {{$i.Categories}} <br>
-			</p>
-		{{end}}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  		<title>RSS ftw</title>
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+	</head>
+
+	<body class="ma2 ma4-l">
+		
+		<p>Showing {{len .Items}} of {{.Cnt}} unseen</p>
 
 		<form action="/seen" method="post">
 			<input type="submit" value="Set all these {{len .Items}} as seen!">
 		</form>
-		Unseen: {{.Cnt}}
 		
+		
+		<ul class="list pl0">
+			{{range $i := .Items}}
+				<li class="pa3 pa4-ns bb b--black-10">
+					<b class="db f3 mb1">{{$i.FeedDesc}}</b>
+					<b class="db f3 mb1"><a href="/show-one?guid={{$i.K.Name}}">{{$i.Title}}</a></b>
+					<span class="f5 db lh-copy">
+						<a href={{$i.Link}}>Post Link</a> || <a href={{$i.FeedURL}}>Feed Link</a> || Published: {{$i.PublishedParsed}} | Updated: {{$i.UpdatedParsed}} | FirstSeen: {{$i.FirstSeen}}
+						<br>
+						Categories: {{$i.Categories}}
+						<br>
+					</span>
+				</li>
+			{{end}}
+		  </ul>
+
+
+		<p>Showing {{len .Items}} of {{.Cnt}} unseen</p>
+
+		<form action="/seen" method="post">
+			<input type="submit" value="Set all these {{len .Items}} as seen!">
+		</form>
+
 	</body>
 </html>
 {{end}}
