@@ -56,8 +56,18 @@ func main() {
 		e.Logger.Fatal("I need two environment variables: RSS_FEED_USERNAME and RSS_FEED_PASSWORD")
 	}
 
+	// Look for the GCP project in an ENV var
+	// if this fails we just give up, *unless* DATASTORE_EMULATOR_HOST is set
+	if os.Getenv("DATASTORE_EMULATOR_HOST") != "" {
+		s.gcpProject = "fake-project-localdev"
+	} else if os.Getenv("RSS_FEED_PROJECT") != "" {
+		s.gcpProject = os.Getenv("RSS_FEED_PROJECT")
+	} else {
+		e.Logger.Fatal("I need either the RSS_FEED_PROJECT or the DATASTORE_EMULATOR_HOST environment variable")
+	}
+
 	// Init a Datastore connections
-	s.ds, err = dsInit(s.ctx, "rss-test-281216")
+	s.ds, err = dsInit(s.ctx, s.gcpProject)
 	if err != nil {
 		e.Logger.Fatal(err)
 	}
@@ -119,7 +129,9 @@ type server struct {
 	username string
 	password string
 	ctx      context.Context
-	ds       ds
+
+	gcpProject string
+	ds         ds
 
 	// The feeds we want to check
 	feeds []feed

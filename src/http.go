@@ -35,8 +35,8 @@ func (s server) refresh(c echo.Context) error {
 		log.Print(feed.Title)
 
 		for _, v := range feed.Items {
-			log.Printf("Title: %q UUID: %q\n", v.Title, v.GUID)
-			log.Printf("%q %q\n", v.GUID, v.Title)
+			// log.Printf("Title: %q UUID: %q\n", v.Title, v.GUID)
+			// log.Printf("%q %q\n", v.GUID, v.Title)
 
 			err = s.ds.storeItem(f, v)
 			if err != nil {

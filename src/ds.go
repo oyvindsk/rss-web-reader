@@ -36,7 +36,6 @@ type Item struct {
 	// remove when they are no longer in ds, or they all have ShownToUser == true
 	// or handle the error, see https://godoc.org/cloud.google.com/go/datastore#ErrFieldMismatch
 	// Feed     string    `datastore:",noindex,omitempty"` // old feed url
-	FirtSeen time.Time `datastore:",noindex,omitempty"` // typo
 	// GUID     string    `datastore:",noindex,omitempty"` // we have K if we need it
 }
 
@@ -53,8 +52,7 @@ func dsInit(ctx context.Context, projectid string) (ds, error) {
 
 	d := ds{ctx: ctx}
 
-	// Create a datastore client. In a typical application, you would create
-	// a single client which is reused for every datastore operation.
+	// Create a datastore client, a single client which is reused for every datastore operation.
 	var err error
 	d.client, err = datastore.NewClient(ctx, projectid)
 	if err != nil {
@@ -90,8 +88,8 @@ func (d *ds) storeItem(feedInfo feed, item *gofeed.Item) error {
 		FirstSeen:   time.Now(),
 		ShownToUser: false,
 
-		// Deprecated fields
-		// FirtSeen: time.Now(), // remove when FirstSeen is sat for those we fetch
+		// Deprecated
+		// ..
 	}
 
 	// TODO many at a time
@@ -112,7 +110,7 @@ func (d *ds) storeItem(feedInfo feed, item *gofeed.Item) error {
 		return err
 	}
 
-	log.Printf("Updated value for feed: %s , item GUID: %q", feedInfo, item.GUID)
+	// log.Printf("Updated value for feed: %s , item GUID: %q,  FirstSeen: %s", feedInfo, item.GUID, e.FirstSeen)
 	return nil
 }
 
@@ -154,7 +152,7 @@ func (d *ds) getByGUID(guid string) (Item, bool, error) {
 }
 
 func (d *ds) getAll() ([]Item, error) {
-	q := datastore.NewQuery("items").Order("-FirtSeen") // fix when we have seen all entities without FirstSeen
+	q := datastore.NewQuery("items").Order("-FirstSeen")
 
 	var items []Item
 	_, err := d.client.GetAll(d.ctx, q, &items)
