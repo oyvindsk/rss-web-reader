@@ -1,0 +1,18 @@
+indexes:
+
+- kind: "items"
+  properties:
+  - name: "ShownToUser"
+  - name: "FirstSeen"
+    direction: asc
+
+# Eiter write this file manually or 
+# run the datastore emulator, do the queries and look in:
+# ~/.config/gcloud/emulators/datastore/WEB-INF/index.yaml
+
+# Deploy:
+# /deployment/push-local-datastore-indexes.sh
+#
+# See:
+# https://cloud.google.com/datastore/docs/concepts/indexes
+# https://cloud.google.com/datastore/docs/tools/indexconfig

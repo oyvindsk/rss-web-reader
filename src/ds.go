@@ -165,7 +165,7 @@ func (d *ds) getAll() ([]Item, error) {
 
 func (d *ds) getUnseen(cnt int) ([]Item, error) {
 
-	q := datastore.NewQuery("items").Filter("ShownToUser =", false).Limit(cnt)
+	q := datastore.NewQuery("items").Filter("ShownToUser =", false).Limit(cnt).Order("FirstSeen")
 
 	var items []Item
 	_, err := d.client.GetAll(d.ctx, q, &items)
