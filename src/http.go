@@ -1,13 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"net/http"
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/gommon/log"
 	"github.com/mmcdole/gofeed"
 )
 
@@ -21,18 +21,14 @@ import (
 
 func (s server) refresh(c echo.Context) error {
 
-	// Check THE secret - only used here, so no middleware
-	// see s.refreshFeedsSecret()
-
 	for _, f := range s.feeds {
-		log.Printf("Fetching feed: %s", f)
+		c.Logger().Infof("Fetching feed: %s", f)
 
 		fp := gofeed.NewParser()
 		feed, err := fp.ParseURL(f.url)
 		if err != nil {
-			log.Fatal(err)
+			return fmt.Errorf("Error fetching feed: %s giving up. Err: %s", f, err)
 		}
-		log.Print(feed.Title)
 
 		for _, v := range feed.Items {
 			// log.Printf("Title: %q UUID: %q\n", v.Title, v.GUID)
@@ -40,7 +36,7 @@ func (s server) refresh(c echo.Context) error {
 
 			err = s.ds.storeItem(f, v)
 			if err != nil {
-				log.Fatal(err)
+				return fmt.Errorf("Error storing item. Giving up. Err: %s", err)
 			}
 		}
 	}

@@ -15,3 +15,4 @@ InfoQ                          https://feed.infoq.com/
 SourceHut-Blog                 https://sourcehut.org/blog/index.xml
 Drew-DeVaults-Blog             https://drewdevault.com/feed.xml
 HN-whos-hiring-freelance       https://hnrss.org/whoishiring/freelance
+The-Guardian-International 	   https://www.theguardian.com/international/rss

@@ -16,4 +16,4 @@ if [[ "$AUTH" == "Og==" ]]; then
 fi
 
 echo "POST localhost:8080/refresh with BasicAuth"
-time curl -X POST -H "Authorization: Basic ${AUTH}" localhost:8080/refresh
+time curl -D- -X POST -H "Authorization: Basic ${AUTH}" localhost:8080/refresh
