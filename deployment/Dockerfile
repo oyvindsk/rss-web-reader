@@ -19,17 +19,14 @@ WORKDIR /app
 COPY ./src/go.mod     .
 COPY ./src/go.sum     .
 
-# see https://github.com/golang/go/issues/37700
-RUN go get -u -d ./...
-
 COPY ./src/*.go            ./
 COPY ./templates/*.html    ./templates/
 COPY ./$RSS_FEED_FEEDSFILE .
 
 # Build the command inside the container.
-# Build with import path, maybe we should just give the local files instead?    
 # go does not fetch the package from github since we are already i the module 
-RUN CGO_ENABLED=0 GOOS=linux go build -o runme "foo.bar/rss"
+RUN go mod tidy
+RUN CGO_ENABLED=0 GOOS=linux go build -o runme .
 
 # Module / pkg debug: RUN go list -f '{{.Module.Dir}}' "github.com/oyvindsk/web-oyvindsk.com/blogbackend"
 
